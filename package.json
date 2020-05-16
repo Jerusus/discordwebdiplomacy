@@ -1,0 +1,32 @@
+{
+  "name": "discordwebdiplomacy",
+  "version": "1.0.0",
+  "description": "A webDiplomacy bot for Discord",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jerusus/discordwebdiplomacy.git"
+  },
+  "keywords": [
+    "discord",
+    "webdiplomacy",
+    "diplomacy",
+    "notifications",
+    "alerts"
+  ],
+  "author": "Jerusus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jerusus/discordwebdiplomacy/issues"
+  },
+  "homepage": "https://github.com/Jerusus/discordwebdiplomacy#readme",
+  "dependencies": {
+    "dblapi.js": "^2.4.0",
+    "discord-akairo": "^7.5.6",
+    "discord.js": "^11.6.2",
+    "express": "^4.17.1"
+  }
+}
