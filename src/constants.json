@@ -3,5 +3,6 @@
   "configAliases": ["configure", "config"],
   "cookieAliases": ["cookie"],
   "addAliases": ["add", "addGame"],
-  "removeAliases": ["remove", "removeGame"]
+  "removeAliases": ["remove", "removeGame"],
+  "viewAliases": ["view", "viewGames"]
 }

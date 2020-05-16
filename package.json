@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/Jerusus/discordwebdiplomacy#readme",
   "dependencies": {
+    "@google-cloud/datastore": "^5.1.0",
     "dblapi.js": "^2.4.0",
     "discord-akairo": "^7.5.6",
     "discord.js": "^11.6.2",
