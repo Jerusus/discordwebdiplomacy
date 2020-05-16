@@ -14,10 +14,11 @@ class AddCommand extends Command {
     });
   }
 
-  exec(message) {
+  exec(message, args) {
     var channelId = message.channel.id;
     var gameId = args.gameId;
-    console.log(`Called add ${channelId} from with gameId ${gameId}`);
+    console.log(`Called add from ${channelId} with gameId ${gameId}`);
+    message.channel.send(`Called add from ${channelId} with gameId ${gameId}`);
   }
 }
 
@@ -25,6 +26,7 @@ class RemoveCommand extends Command {
   constructor() {
     super('remove', {
       aliases: constants.removeAliases,
+      channelRestriction: 'guild',
       args: [
         {
           id: 'gameId',
@@ -33,12 +35,14 @@ class RemoveCommand extends Command {
     });
   }
 
-  exec(message) {
+  exec(message, args) {
     var channelId = message.channel.id;
     var gameId = args.gameId;
-    console.log(`Called remove ${channelId} from with gameId ${gameId}`);
+    console.log(`Called remove from ${channelId} with gameId ${gameId}`);
+    message.channel.send(
+      `Called remove from ${channelId} with gameId ${gameId}`
+    );
   }
 }
 
-module.exports = AddCommand;
-module.exports = RemoveCommand;
+module.exports = { AddCommand, RemoveCommand };
