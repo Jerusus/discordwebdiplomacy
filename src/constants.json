@@ -1,0 +1,7 @@
+{
+  "prefix": "d.",
+  "configAliases": ["configure", "config"],
+  "cookieAliases": ["cookie"],
+  "addAliases": ["addGame"],
+  "removeAliases": ["removeGame"]
+}
