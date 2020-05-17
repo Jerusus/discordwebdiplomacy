@@ -164,6 +164,7 @@ function privateScan() {
                         .split(' ')[1];
                       if (countryMap[countryId] === myCountryName) continue;
                       messages.push(message);
+                      messageCountryName = countryMap[countryId];
                     }
                   }
                   if (messages.length > 0) {
