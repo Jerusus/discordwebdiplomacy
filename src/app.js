@@ -85,9 +85,14 @@ function privateScan() {
           .then((res) => res.text())
           .then((body) => {
             // check for new turn
-            var nextPhase = $('.gameTimeRemainingNextPhase', body).text();
-            if (nextPhase.includes('Finished')) {
-              // the game is over!
+            var nextPhase = $('.gameTimeRemainingNextPhase', body)
+              .text()
+              .includes('Finished');
+            var loggedIn = $('.logon > a', body)
+              .text()
+              .attr('href')
+              .includes('logoff=on');
+            if (nextPhase || !loggedIn) {
               const deleteParams = {
                 TableName: tableName,
                 Key: {
@@ -102,11 +107,20 @@ function privateScan() {
                     JSON.stringify(err, null, 2)
                   );
                 } else {
-                  client.users
-                    .get(userId)
-                    .send(
-                      `<${url}> is now finished. You will be unsubscribed from updates.`
-                    );
+                  if (nextPhase) {
+                    client.users
+                      .get(userId)
+                      .send(
+                        `<${url}> is now finished. You will be unsubscribed from updates.`
+                      );
+                  }
+                  if (!loggedIn) {
+                    client.users
+                      .get(userId)
+                      .send(
+                        `Your cookies are invalid and need to be reconfigured.`
+                      );
+                  }
                 }
               });
             }
