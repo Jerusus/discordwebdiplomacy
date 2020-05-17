@@ -21,11 +21,17 @@ class ConfigCommand extends Command {
       message.channel
         .send(`Subscribe this channel to a game by typing ${setCommands.join(
         '|'
-      )} with the desired game ID
-For example, \`d.set 182418\` to subscribe to <http://webdiplomacy.net/board.php?gameID=182418>
-Unsubscribe this channel by typing ${removeCommands.join('|')}`);
+      )} with the desired game ID.
+For example, \`d.set 182418\` to subscribe to <http://webdiplomacy.net/board.php?gameID=182418>.
+Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
     } else {
-      message.channel.send(`Coming soon...`);
+      let cookieCommands = [];
+      for (let alias of constants.cookieAliases) {
+        cookieCommands.push('`' + constants.prefix + alias + '`');
+      }
+      message.channel.send(
+        `Type ${cookieCommands.join('|')} to start configuring message alerts.`
+      );
     }
   }
 }

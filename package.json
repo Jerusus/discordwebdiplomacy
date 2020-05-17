@@ -26,9 +26,11 @@
   "homepage": "https://github.com/Jerusus/discordwebdiplomacy#readme",
   "dependencies": {
     "aws-sdk": "^2.678.0",
+    "cheerio": "^1.0.0-rc.3",
     "dblapi.js": "^2.4.0",
     "discord-akairo": "^7.5.6",
     "discord.js": "^11.6.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
   }
 }
