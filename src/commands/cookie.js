@@ -65,8 +65,8 @@ class CookieCommand extends Command {
             Item: {
               UserId: userId,
               GameId: gameId,
-              Code: code,
-              Key: key,
+              CodeValue: code,
+              KeyValue: key,
             },
           };
           docClient.put(newParams, function (err, data) {
@@ -84,7 +84,7 @@ class CookieCommand extends Command {
           const updateParams = {
             TableName: tableName,
             Key: { UserId: userId },
-            UpdateExpression: 'set GameId = :s, Code = :x, Key = :y',
+            UpdateExpression: 'set GameId = :s, CodeValue = :x, KeyValue = :y',
             ExpressionAttributeValues: {
               ':s': gameId,
               ':x': code,

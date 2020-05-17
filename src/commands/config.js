@@ -36,11 +36,10 @@ Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
         'For example, on Chrome you can obtain these from Settings -> Privacy and Security -> Site Settings -> Cookies.\n' +
         'Search for your webdiplomacy.net cookies.';
       message.channel.send(instructions);
-      message.channel.send(
-        `**Type ${cookieCommands.join(
-          '|'
-        )} to start configuring your cookies.**`
-      );
+      var instructions2 = `Type ${cookieCommands.join(
+        '|'
+      )} to start configuring your cookies. **Calling this command will overwrite your previous settings**`;
+      message.channel.send(instructions2);
     }
   }
 }
