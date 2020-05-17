@@ -132,6 +132,53 @@ function privateScan() {
               var countryName = countriesTable[i].lastChild.children[0].data;
               countryMap[countryId] = countryName;
             }
+
+            var myCountryName = $('.memberYourCountry', body).first().text();
+
+            for (var i = 0; i < countriesTable.length; i++) {
+              var countryNumber = i + 1;
+              fetch(
+                `http://webdiplomacy.net/board.php?gameID=${gameId}&msgCountryID=${countryNumber}`,
+                opts
+              )
+                .then((res) => res.text())
+                .then((chatBody) => {
+                  var discordMessage = [];
+
+                  var messageTime = $('.left.time', chatBody);
+
+                  for (let i = 0; i < messageTime.length; i++) {
+                    var time = messageTime[i].children[0].attribs.unixtime;
+                    var interval = constants.privateScanInterval / 1000;
+                    if (currentTime - interval < time) {
+                      var message = messageTime
+                        .parent()
+                        .children('.right')
+                        .eq(i)
+                        .text();
+                      var countryId = messageTime
+                        .parent()
+                        .children('.right')
+                        .eq(i)
+                        .attr('class')
+                        .split(' ')[1];
+                      if (countryMap[countryId] === myCountryName) continue;
+                      if (message) {
+                        var formattedMessage =
+                          '**' +
+                          countryMap[countryId] +
+                          ':**\n```' +
+                          message +
+                          '```';
+                        discordMessage.push(formattedMessage);
+                      }
+                    }
+                  }
+                  if (discordMessage.length > 0) {
+                    client.users.get(userId).send(discordMessage.join('\n'));
+                  }
+                });
+            }
           });
       }
     }
