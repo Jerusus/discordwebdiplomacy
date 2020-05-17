@@ -8,12 +8,16 @@ const http = require('http');
 var fetch = require('node-fetch');
 const $ = require('cheerio');
 
-// uncomment for app engine
-// const app = express();
+const app = express();
+const server = http.createServer(app);
 
-// app.get('/_ah/start', (req, res) => {
-//   // handle app engine request
-// });
+app.get('/', (req, res) => {
+  res.send('ping');
+});
+
+server.listen(process.env.PORT, () => {
+  console.log(`Listening on ${process.env.PORT}`);
+});
 
 AWS.config.update({
   region: 'us-west-2',
