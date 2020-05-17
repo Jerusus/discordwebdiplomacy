@@ -1,6 +1,3 @@
-# Google App Engine generated folder
-appengine-generated/
 .npmrc
 .vscode/
 node_modules/
-env_variables.yaml
