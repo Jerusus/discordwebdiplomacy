@@ -176,6 +176,30 @@ function publicScan() {
         fetch(url)
           .then((res) => res.text())
           .then((body) => {
+            if (body.includes('Game not found')) {
+              const deleteParams = {
+                TableName: tableName,
+                Key: {
+                  ChannelId: channelId,
+                },
+              };
+
+              docClient.delete(deleteParams, function (err, data) {
+                if (err) {
+                  console.error(
+                    'Unable to read item. Error JSON:',
+                    JSON.stringify(err, null, 2)
+                  );
+                } else {
+                  client.channels
+                    .get(channelId)
+                    .send(
+                      `Game ID ${gameId} not found. This channel will be unsubscribed from updates.`
+                    );
+                }
+              });
+              return;
+            }
             // check for new turn
             var nextPhase = $('.gameTimeRemainingNextPhase', body).text();
             if (nextPhase.includes('Finished')) {
