@@ -85,72 +85,60 @@ function privateScan() {
           .then((res) => res.text())
           .then((body) => {
             if (body.includes('Game not found')) {
-              const deleteParams = {
-                TableName: tableName,
-                Key: {
-                  UserId: userId,
-                },
-              };
-
-              docClient.delete(deleteParams, function (err, data) {
-                if (err) {
-                  console.error(
-                    'Unable to read item. Error JSON:',
-                    JSON.stringify(err, null, 2)
-                  );
-                } else {
-                  client.users
-                    .get(userId)
-                    .send(
-                      `Game ID ${gameId} not found. You will be unsubscribed from updates.`
-                    );
-                }
-              });
-              return;
+              return deletePlayerSubscription(
+                userId,
+                `Game ID ${gameId} not found. You will be unsubscribed from updates.`
+              );
             }
-            // check for new turn
-            var nextPhase = $('.gameTimeRemainingNextPhase', body)
-              .text()
-              .includes('Finished');
+            if (body.include('The userID provided does not exist')) {
+              return deletePlayerSubscription(
+                userId,
+                `Your cookies are invalid and need to be reconfigured.`
+              );
+            }
             var loggedIn = $('.logon > a', body)
               .attr('href')
               .includes('logoff=on');
-            if (nextPhase || !loggedIn) {
-              const deleteParams = {
-                TableName: tableName,
-                Key: {
-                  UserId: userId,
-                },
-              };
-
-              docClient.delete(deleteParams, function (err, data) {
-                if (err) {
-                  console.error(
-                    'Unable to read item. Error JSON:',
-                    JSON.stringify(err, null, 2)
-                  );
-                } else {
-                  if (nextPhase) {
-                    client.users
-                      .get(userId)
-                      .send(
-                        `<${url}> is now finished. You will be unsubscribed from updates.`
-                      );
-                  }
-                  if (!loggedIn) {
-                    client.users
-                      .get(userId)
-                      .send(
-                        `Your cookies are invalid and need to be reconfigured.`
-                      );
-                  }
-                }
-              });
+            if (!loggedIn) {
+              deletePlayerSubscription(
+                userId,
+                `Your cookies are invalid and need to be reconfigured.`
+              );
+            }
+            // check for game end
+            var nextPhase = $('.gameTimeRemainingNextPhase', body)
+              .text()
+              .includes('Finished');
+            if (nextPhase) {
+              deletePlayerSubscription(
+                userId,
+                `<${url}> is now finished. You will be unsubscribed from updates.`
+              );
             }
 
             // check for messages
           });
       }
+    }
+  });
+}
+
+function deletePlayerSubscription(userId, message) {
+  const deleteParams = {
+    TableName: 'PlayerSubscription',
+    Key: {
+      UserId: userId,
+    },
+  };
+
+  docClient.delete(deleteParams, function (err, data) {
+    if (err) {
+      console.error(
+        'Unable to read item. Error JSON:',
+        JSON.stringify(err, null, 2)
+      );
+    } else {
+      client.users.get(userId).send(message);
     }
   });
 }
