@@ -84,18 +84,18 @@ function privateScan() {
         fetch(url, opts)
           .then((res) => res.text())
           .then((body) => {
-            if (body.toString().includes('Game not found')) {
-              return deletePlayerSubscription(
-                userId,
-                `Game ID ${gameId} not found. You will be unsubscribed from updates.`
-              );
-            }
             if (
               body.toString().includes('The userID provided does not exist')
             ) {
               return deletePlayerSubscription(
                 userId,
                 `Your cookies are invalid and need to be reconfigured.`
+              );
+            }
+            if (body.toString().includes('Game not found')) {
+              return deletePlayerSubscription(
+                userId,
+                `Game ID ${gameId} not found. You will be unsubscribed from updates.`
               );
             }
             var loggedIn = $('.logon > a', body)
