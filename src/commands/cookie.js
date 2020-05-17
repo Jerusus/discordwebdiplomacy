@@ -19,18 +19,21 @@ class CookieCommand extends Command {
           id: 'gameId',
           prompt: {
             start: 'please the ID of the game you would like to subscribe to:',
+            time: 120000,
           },
         },
         {
           id: 'code',
           prompt: {
             start: 'please enter your wD_Code cookie value:',
+            time: 120000,
           },
         },
         {
           id: 'key',
           prompt: {
             start: 'please enter your wD-Key cookie value:',
+            time: 120000,
           },
         },
       ],
