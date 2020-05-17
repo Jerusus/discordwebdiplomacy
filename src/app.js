@@ -84,13 +84,13 @@ function privateScan() {
         fetch(url, opts)
           .then((res) => res.text())
           .then((body) => {
-            if (body.includes('Game not found')) {
+            if (body.toString().includes('Game not found')) {
               return deletePlayerSubscription(
                 userId,
                 `Game ID ${gameId} not found. You will be unsubscribed from updates.`
               );
             }
-            if (body.include('The userID provided does not exist')) {
+            if (body.toString().include('The userID provided does not exist')) {
               return deletePlayerSubscription(
                 userId,
                 `Your cookies are invalid and need to be reconfigured.`
