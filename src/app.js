@@ -269,11 +269,15 @@ function publicScan() {
                   .children('.right')
                   .eq(i)
                   .text();
-                if (message) {
-                  var formattedMessage =
-                    '**' + countryMap[countryId] + ':**\n```' + message + '```';
-                  discordMessage.push(formattedMessage);
-                }
+                var countryId = messageTime
+                  .parent()
+                  .children('.right')
+                  .eq(i)
+                  .attr('class')
+                  .split(' ')[1];
+                var formattedMessage =
+                  '**' + countryMap[countryId] + ':**\n```' + message + '```';
+                discordMessage.push(formattedMessage);
               }
             }
             if (discordMessage.length > 0) {
