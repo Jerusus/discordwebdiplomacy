@@ -14,43 +14,59 @@ class CookieCommand extends Command {
     super('cookie', {
       aliases: constants.cookieAliases,
       channelRestriction: 'dm',
+      args: [
+        {
+          id: 'code',
+          prompt: {
+            start: 'Please enter your wD_Code cookie value:',
+          },
+        },
+        {
+          id: 'key',
+          prompt: {
+            start: 'Please enter your wD-Key cookie value:',
+          },
+        },
+      ],
     });
   }
 
-  exec(message) {
+  exec(message, args) {
     var userId = message.author.id;
     console.log(`Called cookie by ${userId}`);
-    var instructions = `instructions`; //todo
-    message.channel.send(instructions);
-    var codePrompt = `codePrompt`; //todo
-    message.channel.send(codePrompt);
-    const codeCollector = message.channel.createMessageCollector(
-      (m) => m.author.id == userId,
-      {
-        max: 1,
-      }
-    );
-    codeCollector.on('collect', (m) => {
-      if (m == 'quit' || m == constants.prefix + 'quit') {
-      } else {
-        message.channel.send('collected: ' + m);
-        var keyPrompt = `keyPrompt`; //todo
-        message.channel.send(keyPrompt);
-        const keyCollector = message.channel.createMessageCollector(
-          (m) => m.author.id == userId,
-          {
-            max: 1,
-          }
-        );
-        keyCollector.on('collect', (m) => {
-          if (m == 'quit' || m == constants.prefix + 'quit') {
-          } else {
-            message.channel.send('collected: ' + m);
-            message.channel.send('I can do stuff now');
-          }
-        });
-      }
-    });
+    console.log(`key ${args.key}`);
+    console.log(`code ${args.code}`);
+    // var instructions = `instructions`; //todo
+    // message.channel.send(instructions);
+    // var codePrompt = `codePrompt`; //todo
+    // message.channel.send(codePrompt);
+    // const codeCollector = message.channel.createMessageCollector(
+    //   (m) => m.author.id == userId,
+    //   {
+    //     max: 1,
+    //   }
+    // );
+    // codeCollector.on('collect', (m) => {
+    //   if (m == 'quit' || m == constants.prefix + 'quit') {
+    //   } else {
+    //     message.channel.send('collected: ' + m);
+    //     var keyPrompt = `keyPrompt`; //todo
+    //     message.channel.send(keyPrompt);
+    //     const keyCollector = message.channel.createMessageCollector(
+    //       (m) => m.author.id == userId,
+    //       {
+    //         max: 1,
+    //       }
+    //     );
+    //     keyCollector.on('collect', (m) => {
+    //       if (m == 'quit' || m == constants.prefix + 'quit') {
+    //       } else {
+    //         message.channel.send('collected: ' + m);
+    //         message.channel.send('I can do stuff now');
+    //       }
+    //     });
+    //   }
+    // });
   }
 }
 

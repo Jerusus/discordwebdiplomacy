@@ -30,7 +30,7 @@ Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
         cookieCommands.push('`' + constants.prefix + alias + '`');
       }
       message.channel.send(
-        `Type ${cookieCommands.join('|')} to start configuring message alerts.`
+        `Type ${cookieCommands.join('|')} to start configuring message alerts.` //todo full instructions
       );
     }
   }
