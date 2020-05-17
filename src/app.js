@@ -90,7 +90,9 @@ function privateScan() {
                 `Game ID ${gameId} not found. You will be unsubscribed from updates.`
               );
             }
-            if (body.toString().include('The userID provided does not exist')) {
+            if (
+              body.toString().includes('The userID provided does not exist')
+            ) {
               return deletePlayerSubscription(
                 userId,
                 `Your cookies are invalid and need to be reconfigured.`
