@@ -7,6 +7,7 @@ const express = require('express');
 const http = require('http');
 var fetch = require('node-fetch');
 const $ = require('cheerio');
+const { get } = require('snekfetch');
 
 const app = express();
 const server = http.createServer(app);
