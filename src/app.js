@@ -41,6 +41,15 @@ setInterval(() => {
   newTurnCheck();
 }, constants.turnCheckInterval);
 
+// ping self to avoid heroku idling
+setInterval(() => {
+  get(process.env.HOST).then((r) => console.log(`Self ping`));
+}, 300000);
+
+setTimeout(() => {
+  client.ws.connection.triggerReady();
+}, 30000);
+
 function newTurnCheck() {
   var currentTime = Math.floor(Date.now() / 1000);
   var scanParams = {
