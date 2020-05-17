@@ -43,7 +43,7 @@ setInterval(() => {
 
 // ping self to avoid heroku idling
 setInterval(() => {
-  fetch(process.env.HOST).then((r) => console.log(`Self ping`));
+  fetch(process.env.HOST).then((r) => {});
 }, 300000);
 
 setTimeout(() => {
@@ -51,6 +51,7 @@ setTimeout(() => {
 }, 30000);
 
 function publicScan() {
+  console.log('Running public scan...');
   var currentTime = Math.floor(Date.now() / 1000);
   var scanParams = {
     TableName: tableName,
