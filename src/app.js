@@ -23,7 +23,6 @@ AWS.config.update({
   region: 'us-west-2',
 });
 
-const tableName = 'GameSubscription';
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const client = new AkairoClient({
@@ -38,8 +37,14 @@ client.login(process.env.TOKEN).then(() => {
 });
 
 setInterval(() => {
-  publicScan();
-}, constants.publicScanInterval);
+  privateScan();
+}, constants.privateScanInterval);
+
+setTimeout(() => {
+  setInterval(() => {
+    publicScan();
+  }, constants.publicScanInterval);
+}, 60000);
 
 // ping self to avoid heroku idling
 setInterval(() => {
@@ -50,9 +55,73 @@ setTimeout(() => {
   client.ws.connection.triggerReady();
 }, 30000);
 
+function privateScan() {
+  console.log('Running private scan...');
+  var currentTime = Math.floor(Date.now() / 1000);
+  const tableName = 'PlayerSubscription';
+  var scanParams = {
+    TableName: tableName,
+  };
+  docClient.scan(scanParams, function (err, data) {
+    if (err) {
+      console.error(
+        'Unable to read item. Error JSON:',
+        JSON.stringify(err, null, 2)
+      );
+    } else {
+      for (let item of data.Items) {
+        // process each player subscription
+        const userId = item.UserId;
+        const gameId = item.GameId;
+        const code = item.CodeValue;
+        const key = item.KeyValue;
+        const opts = {
+          headers: {
+            cookie: `wD_Code=${code}; wD-Key=${key}`,
+          },
+        };
+        const url = `http://webdiplomacy.net/board.php?gameID=${gameId}`;
+        fetch(url, opts)
+          .then((res) => res.text())
+          .then((body) => {
+            // check for new turn
+            var nextPhase = $('.gameTimeRemainingNextPhase', body).text();
+            if (nextPhase.includes('Finished')) {
+              // the game is over!
+              const deleteParams = {
+                TableName: tableName,
+                Key: {
+                  UserId: userId,
+                },
+              };
+
+              docClient.delete(deleteParams, function (err, data) {
+                if (err) {
+                  console.error(
+                    'Unable to read item. Error JSON:',
+                    JSON.stringify(err, null, 2)
+                  );
+                } else {
+                  client.users
+                    .get(userId)
+                    .send(
+                      `<${url}> is now finished. You will be unsubscribed from updates.`
+                    );
+                }
+              });
+            }
+
+            // check for messages
+          });
+      }
+    }
+  });
+}
+
 function publicScan() {
   console.log('Running public scan...');
   var currentTime = Math.floor(Date.now() / 1000);
+  const tableName = 'GameSubscription';
   var scanParams = {
     TableName: tableName,
   };
