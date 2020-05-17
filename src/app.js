@@ -143,10 +143,8 @@ function privateScan() {
               )
                 .then((res) => res.text())
                 .then((chatBody) => {
-                  var discordMessage = [];
-
                   var messageTime = $('.left.time', chatBody);
-
+                  var messages = [];
                   for (let i = 0; i < messageTime.length; i++) {
                     var time = messageTime[i].children[0].attribs.unixtime;
                     var interval = constants.privateScanInterval / 1000;
@@ -163,19 +161,17 @@ function privateScan() {
                         .attr('class')
                         .split(' ')[1];
                       if (countryMap[countryId] === myCountryName) continue;
-                      if (message) {
-                        var formattedMessage =
-                          '**' +
-                          countryMap[countryId] +
-                          ':**\n```' +
-                          message +
-                          '```';
-                        discordMessage.push(formattedMessage);
-                      }
+                      messages.push(message);
                     }
                   }
-                  if (discordMessage.length > 0) {
-                    client.users.get(userId).send(discordMessage.join('\n'));
+                  if (messages.length > 0) {
+                    var discordMessage =
+                      '**' +
+                      messageCountryName +
+                      ':**\n```' +
+                      messages.join('\n') +
+                      '```';
+                    client.users.get(userId).send(discordMessage);
                   }
                 });
             }
