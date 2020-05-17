@@ -45,7 +45,7 @@ class CookieCommand extends Command {
     console.log(`Called cookie by ${userId}`);
 
     const readParams = {
-      tableName: tableName,
+      TableName: tableName,
       Key: {
         UserId: userId,
       },
