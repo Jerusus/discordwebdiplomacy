@@ -9,14 +9,14 @@ class ConfigCommand extends Command {
   }
 
   exec(message) {
+    let removeCommands = [];
+    for (let alias of constants.removeAliases) {
+      removeCommands.push('`' + constants.prefix + alias + '`');
+    }
     if (message.guild) {
       let setCommands = [];
       for (let alias of constants.setAliases) {
         setCommands.push('`' + constants.prefix + alias + '`');
-      }
-      let removeCommands = [];
-      for (let alias of constants.removeAliases) {
-        removeCommands.push('`' + constants.prefix + alias + '`');
       }
       message.channel
         .send(`Subscribe this channel to a game by typing ${setCommands.join(
@@ -38,8 +38,12 @@ Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
       message.channel.send(instructions);
       var instructions2 = `Type ${cookieCommands.join(
         '|'
-      )} to start configuring your cookies. **Calling this command will overwrite your previous settings**`;
+      )} to start configuring your cookies. **Calling this command will overwrite your previous settings.**`;
       message.channel.send(instructions2);
+      var instructions3 = `Type ${removeCommands.join(
+        '|'
+      )} to remove your game subscription.`;
+      message.channel.send(instructions3);
     }
   }
 }
