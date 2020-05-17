@@ -145,6 +145,8 @@ function privateScan() {
                 .then((chatBody) => {
                   var messageTime = $('.left.time', chatBody);
                   var messages = [];
+                  var messageCountryName;
+
                   for (let i = 0; i < messageTime.length; i++) {
                     var time = messageTime[i].children[0].attribs.unixtime;
                     var interval = constants.privateScanInterval / 1000;
