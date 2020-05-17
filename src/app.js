@@ -38,8 +38,8 @@ client.login(process.env.TOKEN).then(() => {
 });
 
 setInterval(() => {
-  newTurnCheck();
-}, constants.turnCheckInterval);
+  publicScan();
+}, constants.publicScanInterval);
 
 // ping self to avoid heroku idling
 setInterval(() => {
@@ -50,7 +50,7 @@ setTimeout(() => {
   client.ws.connection.triggerReady();
 }, 30000);
 
-function newTurnCheck() {
+function publicScan() {
   var currentTime = Math.floor(Date.now() / 1000);
   var scanParams = {
     TableName: tableName,
@@ -69,6 +69,7 @@ function newTurnCheck() {
         fetch(url)
           .then((res) => res.text())
           .then((body) => {
+            // check for new turn
             var nextPhase = $('.gameTimeRemainingNextPhase', body).text();
             if (nextPhase.includes('Finished')) {
               // the game is over!
@@ -100,13 +101,48 @@ function newTurnCheck() {
                 $('.gameHoursPerPhase > strong', body).text()
               );
               // alert if just recently new turn
-              var interval = constants.turnCheckInterval / 1000;
+              var interval = constants.publicScanInterval / 1000;
               if (
                 currentTime + phaseLength - interval < turnDeadline &&
                 interval < phaseLength
               ) {
                 client.channels.get(channelId).send(`@here New turn. <${url}>`);
               }
+            }
+
+            // check for general messages
+            var countriesTable = $(
+              '.memberCountryName',
+              '.membersFullTable',
+              body
+            ).get();
+            var countryMap = {};
+            for (let i = 0; i < countriesTable.length; i++) {
+              var countryId = countriesTable[i].lastChild.attribs.class.split(
+                ' '
+              )[0];
+              var countryName = countriesTable[i].lastChild.children[0].data;
+              countryMap[countryId] = countryName;
+            }
+
+            var messageTime = $('.left, .time', body);
+            var discordMessage = [];
+            for (let i = 0; i < messageTime.length; i++) {
+              var time = messageTime[i].children[0].attribs.unixtime;
+              if (currentTime - interval < time) {
+                // this only works for recent messages
+                var rowNode = messageTime[i].parent.childNodes[2];
+                var countryId = rowNode.attribs.class.split(' ')[1];
+                var message = rowNode.children[0].data;
+                if (message) {
+                  var formattedMessage =
+                    '**' + countryMap[countryId] + ':**\n```' + message + '```';
+                  discordMessage.push(formattedMessage);
+                }
+              }
+            }
+            if (discordMessage.length > 0) {
+              client.channels.get(channelId).send(discordMessage.join('\n'));
             }
           });
       }

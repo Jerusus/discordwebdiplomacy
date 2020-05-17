@@ -4,5 +4,5 @@
   "cookieAliases": ["cookie"],
   "setAliases": ["set", "setGame"],
   "removeAliases": ["remove", "removeGame"],
-  "turnCheckInterval": 300000
+  "publicScanInterval": 300000
 }
