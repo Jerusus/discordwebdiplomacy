@@ -89,7 +89,6 @@ function privateScan() {
               .text()
               .includes('Finished');
             var loggedIn = $('.logon > a', body)
-              .text()
               .attr('href')
               .includes('logoff=on');
             if (nextPhase || !loggedIn) {
