@@ -119,6 +119,19 @@ function privateScan() {
             }
 
             // check for messages
+            var countriesTable = $(
+              '.memberCountryName',
+              '.membersFullTable',
+              body
+            ).get();
+            var countryMap = {};
+            for (let i = 0; i < countriesTable.length; i++) {
+              var countryId = countriesTable[i].lastChild.attribs.class.split(
+                ' '
+              )[0];
+              var countryName = countriesTable[i].lastChild.children[0].data;
+              countryMap[countryId] = countryName;
+            }
           });
       }
     }
@@ -246,15 +259,16 @@ function publicScan() {
               countryMap[countryId] = countryName;
             }
 
-            var messageTime = $('.left, .time', body);
+            var messageTime = $('.left.time', body);
             var discordMessage = [];
             for (let i = 0; i < messageTime.length; i++) {
               var time = messageTime[i].children[0].attribs.unixtime;
               if (currentTime - interval < time) {
-                // this only works for recent messages
-                var rowNode = messageTime[i].parent.childNodes[2];
-                var countryId = rowNode.attribs.class.split(' ')[1];
-                var message = rowNode.children[0].data;
+                var message = messageTime
+                  .parent()
+                  .children('.right')
+                  .eq(i)
+                  .text();
                 if (message) {
                   var formattedMessage =
                     '**' + countryMap[countryId] + ':**\n```' + message + '```';
