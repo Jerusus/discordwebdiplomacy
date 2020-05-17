@@ -84,6 +84,30 @@ function privateScan() {
         fetch(url, opts)
           .then((res) => res.text())
           .then((body) => {
+            if (body.includes('Game not found')) {
+              const deleteParams = {
+                TableName: tableName,
+                Key: {
+                  UserId: userId,
+                },
+              };
+
+              docClient.delete(deleteParams, function (err, data) {
+                if (err) {
+                  console.error(
+                    'Unable to read item. Error JSON:',
+                    JSON.stringify(err, null, 2)
+                  );
+                } else {
+                  client.users
+                    .get(userId)
+                    .send(
+                      `Game ID ${gameId} not found. You will be unsubscribed from updates.`
+                    );
+                }
+              });
+              return;
+            }
             // check for new turn
             var nextPhase = $('.gameTimeRemainingNextPhase', body)
               .text()
