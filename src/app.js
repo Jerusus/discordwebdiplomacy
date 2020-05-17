@@ -8,11 +8,12 @@ const http = require('http');
 var fetch = require('node-fetch');
 const $ = require('cheerio');
 
-const app = express();
+// uncomment for app engine
+// const app = express();
 
-app.get('/_ah/start', (req, res) => {
-  // handle app engine request
-});
+// app.get('/_ah/start', (req, res) => {
+//   // handle app engine request
+// });
 
 AWS.config.update({
   region: 'us-west-2',
