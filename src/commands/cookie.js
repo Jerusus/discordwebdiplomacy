@@ -16,15 +16,21 @@ class CookieCommand extends Command {
       channelRestriction: 'dm',
       args: [
         {
+          id: 'gameId',
+          prompt: {
+            start: 'please the ID of the game you would like to subscribe to:',
+          },
+        },
+        {
           id: 'code',
           prompt: {
-            start: 'Please enter your wD_Code cookie value:',
+            start: 'please enter your wD_Code cookie value:',
           },
         },
         {
           id: 'key',
           prompt: {
-            start: 'Please enter your wD-Key cookie value:',
+            start: 'please enter your wD-Key cookie value:',
           },
         },
       ],
@@ -33,41 +39,80 @@ class CookieCommand extends Command {
 
   exec(message, args) {
     var userId = message.author.id;
+    var gameId = args.gameId;
+    var code = args.code;
+    var key = args.key;
     console.log(`Called cookie by ${userId}`);
-    console.log(`key ${args.key}`);
-    console.log(`code ${args.code}`);
-    // var instructions = `instructions`; //todo
-    // message.channel.send(instructions);
-    // var codePrompt = `codePrompt`; //todo
-    // message.channel.send(codePrompt);
-    // const codeCollector = message.channel.createMessageCollector(
-    //   (m) => m.author.id == userId,
-    //   {
-    //     max: 1,
-    //   }
-    // );
-    // codeCollector.on('collect', (m) => {
-    //   if (m == 'quit' || m == constants.prefix + 'quit') {
-    //   } else {
-    //     message.channel.send('collected: ' + m);
-    //     var keyPrompt = `keyPrompt`; //todo
-    //     message.channel.send(keyPrompt);
-    //     const keyCollector = message.channel.createMessageCollector(
-    //       (m) => m.author.id == userId,
-    //       {
-    //         max: 1,
-    //       }
-    //     );
-    //     keyCollector.on('collect', (m) => {
-    //       if (m == 'quit' || m == constants.prefix + 'quit') {
-    //       } else {
-    //         message.channel.send('collected: ' + m);
-    //         message.channel.send('I can do stuff now');
-    //       }
-    //     });
-    //   }
-    // });
+
+    const readParams = {
+      tableName: tableName,
+      Key: {
+        UserId: userId,
+      },
+    };
+
+    docClient.get(readParams, function (err, data) {
+      if (err) {
+        console.error(
+          'Unable to read item. Error JSON:',
+          JSON.stringify(err, null, 2)
+        );
+      } else {
+        if (data.Item == undefined) {
+          // new user
+          const newParams = {
+            TableName: tableName,
+            Item: {
+              UserId: userId,
+              GameId: gameId,
+              Code: code,
+              Key: key,
+            },
+          };
+          docClient.put(newParams, function (err, data) {
+            if (err) {
+              console.error(
+                'Unable to add item. Error JSON:',
+                JSON.stringify(err, null, 2)
+              );
+              message.channel.send(`Failed to subscribe to gameId: ${gameId}`);
+            } else {
+              message.channel.send(`Subscribed to: ${fmtUrl(gameId)}`);
+            }
+          });
+        } else {
+          const updateParams = {
+            TableName: tableName,
+            Key: { UserId: userId },
+            UpdateExpression: 'set GameId = :s, Code = :x, Key = :y',
+            ExpressionAttributeValues: {
+              ':s': gameId,
+              ':x': code,
+              ':y': key,
+            },
+            ReturnValues: 'UPDATED_NEW',
+          };
+          docClient.update(updateParams, function (err, data) {
+            if (err) {
+              console.error(
+                'Unable to update item. Error JSON:',
+                JSON.stringify(err, null, 2)
+              );
+              message.channel.send(
+                `Failed to update subscription to gameId: ${gameId}`
+              );
+            } else {
+              message.channel.send(`Subscribed to: ${fmtUrl(gameId)}`);
+            }
+          });
+        }
+      }
+    });
   }
+}
+
+function fmtUrl(gameId) {
+  return `<http://webdiplomacy.net/board.php?gameID=${gameId}>`;
 }
 
 module.exports = CookieCommand;

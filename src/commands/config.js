@@ -29,8 +29,14 @@ Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
       for (let alias of constants.cookieAliases) {
         cookieCommands.push('`' + constants.prefix + alias + '`');
       }
+      var instructions =
+        'This bot can store cookies for you to forward your private messages on webDiplomacy to Discord.\n' +
+        'You will need the values from your `wD_Code` and `wD-Key` cookies.\n' +
+        'For example, on Chrome you can obtain these from Settings -> Privacy and Security -> Site Settings -> Cookies.\n' +
+        'Search for your webdiplomacy.net cookies.';
+      message.channel.send(instructions);
       message.channel.send(
-        `Type ${cookieCommands.join('|')} to start configuring message alerts.` //todo full instructions
+        `Type ${cookieCommands.join('|')} to start configuring your cookies.`
       );
     }
   }
