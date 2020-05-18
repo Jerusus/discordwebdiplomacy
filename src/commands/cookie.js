@@ -18,7 +18,8 @@ class CookieCommand extends Command {
         {
           id: 'gameId',
           prompt: {
-            start: 'please the ID of the game you would like to subscribe to:',
+            start:
+              'please enter the ID of the game you would like to subscribe to:',
             time: 120000,
           },
         },
