@@ -36,15 +36,15 @@ client.login(process.env.TOKEN).then(() => {
   console.log('Logged in!');
 });
 
+privateScan();
 setInterval(() => {
   privateScan();
 }, constants.privateScanInterval);
 
-setTimeout(() => {
-  setInterval(() => {
-    publicScan();
-  }, constants.publicScanInterval);
-}, 60000);
+publicScan();
+setInterval(() => {
+  publicScan();
+}, constants.publicScanInterval);
 
 // ping self to avoid heroku idling
 setInterval(() => {

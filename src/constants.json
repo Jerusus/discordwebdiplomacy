@@ -4,6 +4,6 @@
   "cookieAliases": ["cookie"],
   "setAliases": ["set", "setGame"],
   "removeAliases": ["remove", "removeGame"],
-  "publicScanInterval": 600000,
-  "privateScanInterval": 300000
+  "publicScanInterval": 420000,
+  "privateScanInterval": 240000
 }
