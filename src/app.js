@@ -34,14 +34,14 @@ const client = new AkairoClient({
 
 client.login(process.env.TOKEN).then(() => {
   console.log('Logged in!');
+  privateScan();
+  publicScan();
 });
 
-privateScan();
 setInterval(() => {
   privateScan();
 }, constants.privateScanInterval);
 
-publicScan();
 setInterval(() => {
   publicScan();
 }, constants.publicScanInterval);
