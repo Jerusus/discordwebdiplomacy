@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const { AkairoClient } = require('discord-akairo');
-const DBL = require('dblapi.js');
 const constants = require('./constants');
 const AWS = require('aws-sdk');
 const express = require('express');
