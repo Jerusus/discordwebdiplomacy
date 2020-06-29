@@ -31,6 +31,7 @@ Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
       }
       var instructions =
         'This bot can store cookies for you to forward your private messages on webDiplomacy to Discord.\n' +
+        'WARNING: ONLY CONFIGURE COOKIES IF YOU TRUST THE PERSON HOSTING THIS BOT. YOUR COOKIES ARE SENSITIVE DATA.\n' +
         'You can only have at most one active game subscription.\n' +
         'You will need the values from your `wD_Code` and `wD-Key` cookies.\n' +
         'For example, on Chrome you can obtain these from Settings -> Privacy and Security -> Site Settings -> Cookies.\n' +
