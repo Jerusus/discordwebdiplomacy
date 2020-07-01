@@ -167,13 +167,23 @@ function privateScan() {
                     }
                   }
                   if (messages.length > 0) {
-                    var discordMessage =
-                      '**' +
-                      messageCountryName +
-                      ':**\n```' +
-                      messages.join('\n') +
-                      '```';
-                    client.users.get(userId).send(discordMessage);
+                    if (messageCountryName) {
+                      var discordMessage =
+                        '**' +
+                        messageCountryName +
+                        ':**\n```' +
+                        messages.join('\n') +
+                        '```';
+                      client.users.get(userId).send(discordMessage);
+                    } else {
+                      var discordMessage =
+                        '**' +
+                        'Notice' +
+                        ':**\n```' +
+                        messages.join('\n') +
+                        '```';
+                      client.users.get(userId).send(discordMessage);
+                    }
                   }
                 });
             }
