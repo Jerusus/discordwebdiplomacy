@@ -13,15 +13,14 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 class MapCommand extends Command {
   constructor() {
     super('map', {
-      aliases: ['map'],
+      aliases: constants.mapAliases,
     });
   }
 
   exec(message) {
     let tableName;
     let readParams;
-    let isGuild = message.guild == true;
-    if (isGuild) {
+    if (message.guild) {
       tableName = 'GameSubscription';
       var channelId = message.channel.id;
       readParams = {
@@ -48,7 +47,7 @@ class MapCommand extends Command {
         );
       } else {
         if (data.Item == undefined) {
-          if (isGuild) {
+          if (message.guild) {
             message.channel.send(
               'This channel is not currently subscribed to a game.'
             );
