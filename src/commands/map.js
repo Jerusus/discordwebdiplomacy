@@ -55,6 +55,7 @@ class MapCommand extends Command {
             message.channel.send('You are not currently subscribed to a game.');
           }
         } else {
+          const gameId = item.GameId;
           const url = `http://webdiplomacy.net/board.php?gameID=${gameId}`;
           fetch(url)
             .then((res) => res.text())
