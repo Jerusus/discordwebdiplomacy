@@ -25,7 +25,7 @@ class SetCommand extends Command {
   exec(message, args) {
     var channelId = message.channel.id;
     var gameId = args.gameId;
-    console.log(`Called add from ${channelId} with gameId ${gameId}`);
+    console.log(`Called set from ${channelId} with gameId ${gameId}`);
 
     const readParams = {
       TableName: tableName,
