@@ -31,7 +31,6 @@ class MessageCommand extends Command {
   }
 
   exec(message, args) {
-    console.log(args);
     let tableName = 'PlayerSubscription';
     var userId = message.author.id;
     let readParams = {
@@ -97,13 +96,45 @@ class MessageCommand extends Command {
               ).get();
               var countryMap = {};
               for (let i = 0; i < countriesTable.length; i++) {
-                var countryId = countriesTable[i].lastChild.attribs.class.split(
-                  ' '
-                )[0];
+                var countryId = countriesTable[i].lastChild.attribs.class
+                  .split(' ')[0]
+                  .replace('country');
                 var countryName = countriesTable[i].lastChild.children[0].data;
                 if (countryName !== myCountryName) {
                   countryMap[countryId] = countryName;
                 }
+              }
+
+              if (countryMap[args.countryId]) {
+                let keyValues = [];
+                keyValues.push([0, 'Global']);
+                for (let key in countryMap) {
+                  keyValues.push([key, countryMap[key]]);
+                }
+
+                keyValues.sort((a, b) => {
+                  return a[0] - b[1];
+                });
+
+                let countryListMessage = [];
+                for (let countryPair in keyValues) {
+                  countryListMessage.push(
+                    countryPair[0] + ' - ' + countryPair[1]
+                  );
+                }
+
+                let messageCommands = [];
+                for (let alias of constants.messageAliases) {
+                  messageCommands.push('`' + constants.prefix + alias + '`');
+                }
+
+                let response = `Send a message to a country by typing ${messageCommands.join(
+                  '|'
+                )} with the country's ID:\n\`\`\`${countryListMessage.join(
+                  '\n'
+                )}\`\`\`\nE.g., \`d.message 3 I won't stab you I promise!\``;
+              } else {
+                // valid message, ship it
               }
             });
         }
