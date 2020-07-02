@@ -102,7 +102,9 @@ class MessageCommand extends Command {
                   .split(' ')[0]
                   .replace('country', '');
                 var countryName = countriesTable[i].lastChild.children[0].data;
-                if (countryName !== myCountryName) {
+                if (countryName === myCountryName) {
+                  countryMap[countryId] = 'Notes';
+                } else {
                   countryMap[countryId] = countryName;
                 }
               }
@@ -135,7 +137,7 @@ class MessageCommand extends Command {
                   '|'
                 )} with the country's ID:\n\`\`\`${countryListMessage.join(
                   '\n'
-                )}\`\`\`\nE.g., \`d.message 3 I won't stab you I promise!\``;
+                )}\`\`\`\nE.g., \`d.message 1 I'm sending you a message!\``;
 
                 message.channel.send(response);
               } else {
@@ -163,7 +165,7 @@ class MessageCommand extends Command {
                   )
                     .then((res) => res.text())
                     .then((body) => {
-                      message.react(':incoming_envelope:');
+                      message.react('📨');
                     });
                 }
               }
