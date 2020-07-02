@@ -7,5 +7,5 @@
   "mapAliases": ["map"],
   "messageAliases": ["message", "m"],
   "publicScanInterval": 420000,
-  "privateScanInterval": 240000
+  "privateScanInterval": 120000
 }

@@ -137,7 +137,7 @@ function privateScan() {
             for (var i = 0; i < countriesTable.length; i++) {
               var countryNumber = i + 1;
               fetch(
-                `http://webdiplomacy.net/board.php?gameID=${gameId}&msgCountryID=${countryNumber}`,
+                `http://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${countryNumber}`,
                 opts
               )
                 .then((res) => res.text())
