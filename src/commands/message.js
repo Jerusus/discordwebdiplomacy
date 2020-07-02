@@ -135,9 +135,9 @@ class MessageCommand extends Command {
 
                 let response = `Send a message to a country by typing ${messageCommands.join(
                   '|'
-                )} with the country's ID:\n\`\`\`${countryListMessage.join(
+                )} with the country's ID.\nE.g., \`d.message 1 I'm sending you a message!\`\n\`\`\`${countryListMessage.join(
                   '\n'
-                )}\`\`\`\nE.g., \`d.message 1 I'm sending you a message!\``;
+                )}\`\`\``;
 
                 message.channel.send(response);
               } else {
@@ -163,7 +163,13 @@ class MessageCommand extends Command {
                   )
                     .then((res) => res.text())
                     .then((body) => {
-                      message.react('📨');
+                      if (body) {
+                        message.react('📨');
+                      } else {
+                        message.channel.send(
+                          'There was an error sending your message.'
+                        );
+                      }
                     });
                 }
               }
