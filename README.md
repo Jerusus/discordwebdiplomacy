@@ -2,7 +2,7 @@
 
 A webDiplomacy bot for Discord
 
-This bot will send a notification in your Discord channel when a new turn has just started. At the moment, a server channel can only be subscribed to a single game at a time, and a user can only receive notifications for a single game at a time.
+This bot provides a Discord integration for your webDiplomacy games. It is most suited for non-live games (i.e., games with turn lengths longer than 1 hour). It will send a notification in your Discord channel when a new turn has just begun. The bot also allows you to send and receive messages from other players. At the moment, a server channel can only be subscribed to a single game at a time, and a user can only receive notifications for a single game at a time.
 
 **Click [here](https://discordapp.com/oauth2/authorize?&client_id=711268026191708283&scope=bot&permissions=0) to add this bot to your Discord server, or send this link to your server owner.**
 
@@ -12,6 +12,7 @@ Thanks to [webDiplomacy](http://webdiplomacy.net/) for hosting Diplomacy games.
 
 - `d.help`: View available commands.
 - `d.configure`: View instructions to configure the bot for yourself and/or your server channel.
+- `d.map`: Display the current turn's game board for the subscribed game.
 
 ### Within a server channel
 
@@ -22,6 +23,7 @@ Thanks to [webDiplomacy](http://webdiplomacy.net/) for hosting Diplomacy games.
 
 - `d.cookie`: Initiate setup for your user to receive notifications for a webDiplomacy game.
 - `d.remove`: Unsubscribe from notifications for webDiplomacy games.
+- `d.message`: Send an in-game message to another country.
 
 ## Self-Hosting
 
