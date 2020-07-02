@@ -3,6 +3,7 @@ const constants = require('../constants');
 const AWS = require('aws-sdk');
 const $ = require('cheerio');
 var fetch = require('node-fetch');
+const { URLSearchParams } = require('url');
 
 AWS.config.update({
   region: 'us-west-2',
@@ -95,6 +96,7 @@ class MessageCommand extends Command {
                 body
               ).get();
               var countryMap = {};
+              countryMap[0] = 'Global';
               for (let i = 0; i < countriesTable.length; i++) {
                 var countryId = countriesTable[i].lastChild.attribs.class
                   .split(' ')[0]
@@ -107,19 +109,20 @@ class MessageCommand extends Command {
 
               if (!countryMap[args.countryId]) {
                 let keyValues = [];
-                keyValues.push([0, 'Global']);
                 for (let key in countryMap) {
                   keyValues.push([key, countryMap[key]]);
                 }
 
                 keyValues.sort((a, b) => {
-                  return a[0] - b[1];
+                  return a[0] - b[0];
                 });
 
                 let countryListMessage = [];
                 for (let countryPair in keyValues) {
                   countryListMessage.push(
-                    countryPair[0] + ' - ' + countryPair[1]
+                    keyValues[countryPair][0] +
+                      ' - ' +
+                      keyValues[countryPair][1]
                   );
                 }
 
@@ -136,8 +139,33 @@ class MessageCommand extends Command {
 
                 message.channel.send(response);
               } else {
-                // valid message, ship it
-                console.log(`valid message ${args.text}`);
+                if (!args.text) {
+                  message.channel.send(
+                    'The message content is empty, not sending.'
+                  );
+                } else {
+                  const params = new URLSearchParams();
+                  params.append('newmessage', args.text);
+
+                  let postOpts = {
+                    method: 'post',
+                    body: params,
+                    headers: {
+                      headers: {
+                        cookie: `wD_Code=${code}; wD-Key=${key}`,
+                      },
+                    },
+                  };
+
+                  fetch(
+                    `http://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${args.countryId}`,
+                    postOpts
+                  )
+                    .then((res) => res.text())
+                    .then((body) => {
+                      message.react(':incoming_envelope:');
+                    });
+                }
               }
             });
         }
