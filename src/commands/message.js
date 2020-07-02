@@ -168,6 +168,7 @@ class MessageCommand extends Command {
                       res.text();
                     })
                     .then((body) => {
+                      console.log(body);
                       message.react('📨');
                     });
                 }
