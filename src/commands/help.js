@@ -17,13 +17,20 @@ class HelpCommand extends Command {
     for (let alias of constants.mapAliases) {
       mapCommands.push('`' + constants.prefix + alias + '`');
     }
+    let messageCommands = [];
+    for (let alias of constants.messageAliases) {
+      messageCommands.push('`' + constants.prefix + alias + '`');
+    }
     message.channel.send(
       `Configure your games by typing ${configCommands.join('|')}.
 Type the command in a channel to receive new turn notifications.
 Type the command in a DM to the bot to receive message notifications.
 Once subscribed, type ${mapCommands.join(
         '|'
-      )} to display the current turn's map.`
+      )} to display the current turn's map.
+Send messages to other countries in-game by typing ${messageCommands.join(
+        '|'
+      )} in a DM to the bot.`
     );
   }
 }

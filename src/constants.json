@@ -4,7 +4,8 @@
   "cookieAliases": ["cookie"],
   "setAliases": ["set", "setGame"],
   "removeAliases": ["remove", "removeGame"],
-  "mapAliases": ["map", "m"],
+  "mapAliases": ["map"],
+  "messageAliases": ["message", "m"],
   "publicScanInterval": 420000,
   "privateScanInterval": 240000
 }
