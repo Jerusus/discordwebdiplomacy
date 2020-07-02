@@ -105,8 +105,6 @@ class MessageCommand extends Command {
                 }
               }
 
-              console.log(countryMap);
-
               if (!countryMap[args.countryId]) {
                 let keyValues = [];
                 keyValues.push([0, 'Global']);
@@ -135,6 +133,8 @@ class MessageCommand extends Command {
                 )} with the country's ID:\n\`\`\`${countryListMessage.join(
                   '\n'
                 )}\`\`\`\nE.g., \`d.message 3 I won't stab you I promise!\``;
+
+                message.channel.send(response);
               } else {
                 // valid message, ship it
                 console.log(`valid message ${args.text}`);
