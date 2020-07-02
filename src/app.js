@@ -167,9 +167,6 @@ function privateScan() {
                     }
                   }
                   if (messages.length > 0) {
-                    if (!messageCountryName) {
-                      messageCountryName = 'Notice';
-                    }
                     var discordMessage =
                       '**' +
                       messageCountryName +
@@ -323,8 +320,12 @@ function publicScan() {
                   .eq(i)
                   .attr('class')
                   .split(' ')[1];
+                var countryName = countryMap[countryId];
+                if (!countryName) {
+                  countryName = 'Notice';
+                }
                 var formattedMessage =
-                  '**' + countryMap[countryId] + ':**\n```' + message + '```';
+                  '**' + countryName + ':**\n```' + message + '```';
                 discordMessage.push(formattedMessage);
               }
             }
