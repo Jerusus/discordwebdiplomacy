@@ -98,14 +98,16 @@ class MessageCommand extends Command {
               for (let i = 0; i < countriesTable.length; i++) {
                 var countryId = countriesTable[i].lastChild.attribs.class
                   .split(' ')[0]
-                  .replace('country');
+                  .replace('country', '');
                 var countryName = countriesTable[i].lastChild.children[0].data;
                 if (countryName !== myCountryName) {
                   countryMap[countryId] = countryName;
                 }
               }
 
-              if (countryMap[args.countryId]) {
+              console.log(countryMap);
+
+              if (!countryMap[args.countryId]) {
                 let keyValues = [];
                 keyValues.push([0, 'Global']);
                 for (let key in countryMap) {
@@ -135,6 +137,7 @@ class MessageCommand extends Command {
                 )}\`\`\`\nE.g., \`d.message 3 I won't stab you I promise!\``;
               } else {
                 // valid message, ship it
+                console.log(`valid message ${args.text}`);
               }
             });
         }
