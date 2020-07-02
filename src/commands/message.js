@@ -153,9 +153,7 @@ class MessageCommand extends Command {
                     method: 'post',
                     body: params,
                     headers: {
-                      headers: {
-                        cookie: `wD_Code=${code}; wD-Key=${key}`,
-                      },
+                      cookie: `wD_Code=${code}; wD-Key=${key}`,
                     },
                   };
 
@@ -163,12 +161,8 @@ class MessageCommand extends Command {
                     `http://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${args.countryId}`,
                     postOpts
                   )
-                    .then((res) => {
-                      console.log(res);
-                      res.text();
-                    })
+                    .then((res) => res.text())
                     .then((body) => {
-                      console.log(body);
                       message.react('📨');
                     });
                 }
