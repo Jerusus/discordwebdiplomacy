@@ -163,7 +163,10 @@ class MessageCommand extends Command {
                     `http://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${args.countryId}`,
                     postOpts
                   )
-                    .then((res) => res.text())
+                    .then((res) => {
+                      console.log(res);
+                      res.text();
+                    })
                     .then((body) => {
                       message.react('📨');
                     });
