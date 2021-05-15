@@ -6,7 +6,7 @@ This bot provides a Discord integration for your webDiplomacy games. It is most 
 
 **Click [here](https://discordapp.com/oauth2/authorize?&client_id=711268026191708283&scope=bot&permissions=0) to add this bot to your Discord server, or send this link to your server owner.**
 
-Thanks to [webDiplomacy](http://webdiplomacy.net/) for hosting Diplomacy games.
+Thanks to [webDiplomacy](https://webdiplomacy.net/) for hosting Diplomacy games.
 
 ## Usage
 

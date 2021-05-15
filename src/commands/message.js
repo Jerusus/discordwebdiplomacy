@@ -59,7 +59,7 @@ class MessageCommand extends Command {
               cookie: `wD_Code=${code}; wD-Key=${key}`,
             },
           };
-          const url = `http://webdiplomacy.net/board.php?gameID=${gameId}`;
+          const url = `https://webdiplomacy.net/board.php?gameID=${gameId}`;
           fetch(url, opts)
             .then((res) => res.text())
             .then((body) => {
@@ -158,7 +158,7 @@ class MessageCommand extends Command {
                   };
 
                   fetch(
-                    `http://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${args.countryId}`,
+                    `https://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${args.countryId}`,
                     postOpts
                   )
                     .then((res) => res.text())

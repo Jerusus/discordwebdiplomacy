@@ -91,7 +91,7 @@ class SetCommand extends Command {
 }
 
 function fmtUrl(gameId) {
-  return `<http://webdiplomacy.net/board.php?gameID=${gameId}>`;
+  return `<https://webdiplomacy.net/board.php?gameID=${gameId}>`;
 }
 
 module.exports = SetCommand;
