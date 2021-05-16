@@ -169,7 +169,7 @@ function privateScan() {
                   if (messages.length > 0) {
                     var discordMessage =
                       '**' +
-                      `[${countryId + 1}] ` +
+                      `[${countryId.substr(-1)}] ` +
                       messageCountryName +
                       ':**\n```' +
                       messages.join('\n') +
