@@ -56,12 +56,12 @@ class MapCommand extends Command {
           }
         } else {
           const gameId = data.Item.GameId;
-          const url = `https://webdiplomacy.net/board.php?gameID=${gameId}`;
+          const url = `${constants.website}/board.php?gameID=${gameId}`;
           fetch(url)
             .then((res) => res.text())
             .then((body) => {
               var imageLink = $('#LargeMapLink', body).attr('href');
-              message.channel.send(`https://webdiplomacy.net/${imageLink}`);
+              message.channel.send(`${constants.website}/${imageLink}`);
             });
         }
       }

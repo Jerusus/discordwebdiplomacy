@@ -116,7 +116,7 @@ class CookieCommand extends Command {
 }
 
 function fmtUrl(gameId) {
-  return `<https://webdiplomacy.net/board.php?gameID=${gameId}>`;
+  return `<${constants.website}/board.php?gameID=${gameId}>`;
 }
 
 module.exports = CookieCommand;

@@ -79,7 +79,7 @@ function privateScan() {
             cookie: `wD_Code=${code}; wD-Key=${key}`,
           },
         };
-        const url = `https://webdiplomacy.net/board.php?gameID=${gameId}`;
+        const url = `${constants.website}/board.php?gameID=${gameId}`;
         fetch(url, opts)
           .then((res) => res.text())
           .then((body) => {
@@ -137,7 +137,7 @@ function privateScan() {
             for (var i = 0; i < countriesTable.length; i++) {
               var countryNumber = i + 1;
               fetch(
-                `https://webdiplomacy.net/message.php?gameID=${gameId}&msgCountryID=${countryNumber}`,
+                `${constants.website}/message.php?gameID=${gameId}&msgCountryID=${countryNumber}`,
                 opts
               )
                 .then((res) => res.text())
@@ -221,7 +221,7 @@ function publicScan() {
       for (let item of data.Items) {
         const channelId = item.ChannelId;
         const gameId = item.GameId;
-        const url = `https://webdiplomacy.net/board.php?gameID=${gameId}`;
+        const url = `${constants.website}/board.php?gameID=${gameId}`;
         fetch(url)
           .then((res) => res.text())
           .then((body) => {

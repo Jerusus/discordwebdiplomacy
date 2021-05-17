@@ -22,7 +22,7 @@ class ConfigCommand extends Command {
         .send(`Subscribe this channel to a game by typing ${setCommands.join(
         '|'
       )} with the desired game ID.
-For example, \`d.set 182418\` to subscribe to <https://webdiplomacy.net/board.php?gameID=182418>.
+For example, \`d.set 182418\` to subscribe to <${constants.website}/board.php?gameID=182418>.
 Unsubscribe this channel by typing ${removeCommands.join('|')}.`);
     } else {
       let cookieCommands = [];
