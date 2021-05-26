@@ -14,7 +14,7 @@ class ReadyListener extends Listener {
     let flag = 0;
     let notices = [
       `"d.help" for commands`,
-      `${this.client.users.size.toLocaleString()} users`,
+      `${this.client.users.cache.size.toLocaleString()} users`,
     ];
     this.client.user.setActivity(notices[0]);
     setInterval(() => {
