@@ -13,7 +13,7 @@ class CookieCommand extends Command {
   constructor() {
     super('cookie', {
       aliases: constants.cookieAliases,
-      channelRestriction: 'dm',
+      channel: 'dm',
       args: [
         {
           id: 'gameId',

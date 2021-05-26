@@ -15,7 +15,7 @@ class MessageCommand extends Command {
   constructor() {
     super('message', {
       aliases: constants.messageAliases,
-      channelRestriction: 'dm',
+      channel: 'dm',
       args: [
         {
           id: 'countryId',
@@ -195,7 +195,7 @@ function deletePlayerSubscription(userId, message) {
         JSON.stringify(err, null, 2)
       );
     } else {
-      client.users.get(userId).send(message);
+      client.users.cache.get(userId).send(message);
     }
   });
 }

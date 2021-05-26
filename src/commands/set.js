@@ -13,7 +13,7 @@ class SetCommand extends Command {
   constructor() {
     super('set', {
       aliases: constants.setAliases,
-      channelRestriction: 'guild',
+      channel: 'guild',
       args: [
         {
           id: 'gameId',

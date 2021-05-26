@@ -1,5 +1,9 @@
 const Discord = require('discord.js');
-const { AkairoClient } = require('discord-akairo');
+const {
+  AkairoClient,
+  CommandHandler,
+  ListenerHandler,
+} = require('discord-akairo');
 const constants = require('./constants');
 const AWS = require('aws-sdk');
 const express = require('express');
@@ -24,12 +28,33 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const client = new AkairoClient({
-  prefix: constants.prefix,
-  allowMention: true,
-  commandDirectory: './src/commands/',
-  listenerDirectory: './src/listeners/',
-});
+class DiscordWebDiplomacyClient extends AkairoClient {
+  constructor() {
+    super(
+      {
+        ownerID: '175374170815725569',
+      },
+      {
+        disableMentions: 'everyone',
+      }
+    );
+
+    this.CommandHandler = new CommandHandler(this, {
+      directory: './src/commands/',
+      prefix: constants.prefix,
+    });
+
+    this.ListenerHandler = new ListenerHandler(this, {
+      directory: './src/listeners/',
+    });
+
+    this.commandHandler.useListenerHandler(this.listenerHandler);
+    this.commandHandler.loadAll();
+    this.listenerHandler.loadAll();
+  }
+}
+
+const client = new DiscordWebDiplomacyClient();
 
 client.login(process.env.TOKEN).then(() => {
   console.log('Logged in!');
@@ -49,10 +74,6 @@ setInterval(() => {
 setInterval(() => {
   fetch(process.env.HOST).then((r) => {});
 }, 300000);
-
-setTimeout(() => {
-  client.ws.connection.triggerReady();
-}, 30000);
 
 function privateScan() {
   console.log('Running private scan...');
@@ -174,7 +195,7 @@ function privateScan() {
                       ':**\n```' +
                       messages.join('\n') +
                       '```';
-                    client.users.get(userId).send(discordMessage);
+                    client.users.cache.get(userId).send(discordMessage);
                   }
                 });
             }
@@ -199,7 +220,7 @@ function deletePlayerSubscription(userId, message) {
         JSON.stringify(err, null, 2)
       );
     } else {
-      client.users.get(userId).send(message);
+      client.users.cache.get(userId).send(message);
     }
   });
 }
@@ -240,7 +261,7 @@ function publicScan() {
                     JSON.stringify(err, null, 2)
                   );
                 } else {
-                  client.channels
+                  client.channels.cache
                     .get(channelId)
                     .send(
                       `Game ID ${gameId} not found. This channel will be unsubscribed from updates.`
@@ -267,7 +288,7 @@ function publicScan() {
                     JSON.stringify(err, null, 2)
                   );
                 } else {
-                  client.channels
+                  client.channels.cache
                     .get(channelId)
                     .send(
                       `<${url}> is now finished. This channel will unsubscribe from updates.`
@@ -286,7 +307,7 @@ function publicScan() {
                 currentTime + phaseLength - interval < turnDeadline &&
                 interval < phaseLength
               ) {
-                client.channels.get(channelId).send(`@here New turn. <${url}>`);
+                client.channels.cache.get(channelId).send(`@here New turn. <${url}>`);
               }
             }
 
@@ -331,7 +352,7 @@ function publicScan() {
               }
             }
             if (discordMessage.length > 0) {
-              client.channels.get(channelId).send(discordMessage.join('\n'));
+              client.channels.cache.get(channelId).send(discordMessage.join('\n'));
             }
           });
       }
