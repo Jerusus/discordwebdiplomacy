@@ -39,12 +39,12 @@ class DiscordWebDiplomacyClient extends AkairoClient {
       }
     );
 
-    this.CommandHandler = new CommandHandler(this, {
+    this.commandHandler = new CommandHandler(this, {
       directory: './src/commands/',
       prefix: constants.prefix,
     });
 
-    this.ListenerHandler = new ListenerHandler(this, {
+    this.listenerHandler = new ListenerHandler(this, {
       directory: './src/listeners/',
     });
 
