@@ -48,7 +48,6 @@ class DiscordWebDiplomacyClient extends AkairoClient {
       directory: './src/listeners/',
     });
 
-    this.commandHandler.useListenerHandler(this.listenerHandler);
     this.commandHandler.loadAll();
     this.listenerHandler.loadAll();
   }
