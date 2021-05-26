@@ -33,9 +33,6 @@ class DiscordWebDiplomacyClient extends AkairoClient {
     super(
       {
         ownerID: '175374170815725569',
-      },
-      {
-        disableMentions: 'everyone',
       }
     );
 
