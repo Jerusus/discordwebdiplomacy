@@ -184,14 +184,20 @@ function privateScan() {
                     }
                   }
                   if (messages.length > 0) {
-                    var discordMessage =
+                    const discordMessage =
                       '**' +
                       `[${countryId.substr(-1)}] ` +
                       messageCountryName +
                       ':**\n```' +
                       messages.join('\n') +
                       '```';
-                    client.users.cache.get(userId).send(discordMessage);
+                    client.users.fetch(userId).then((user) => {
+                      user.send(discordMessage);
+                    })
+                    .catch((sendErr) => {
+                      console.log(`Failed sending message to userId ${userId}`);
+                      console.log(sendErr);
+                    })
                   }
                 });
             }
