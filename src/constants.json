@@ -8,5 +8,5 @@
   "messageAliases": ["message", "m"],
   "publicScanInterval": 420000,
   "privateScanInterval": 120000,
-  "website": "https://webdiplomacy.com"
+  "website": "https://webdiplomacy.net"
 }
