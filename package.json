@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/Jerusus/discordwebdiplomacy#readme",
   "dependencies": {
-    "aws-sdk": "^2.811.0",
+    "aws-sdk": "^2.814.0",
     "cheerio": "^1.0.0-rc.3",
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.5.3",
